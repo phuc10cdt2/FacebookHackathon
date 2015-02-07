@@ -122,11 +122,15 @@ def edit(request, list_id):
 		return render_to_response('editlist.html',param,context_instance=RequestContext(request))
 
 @csrf_exempt
-def addLink(request,listId,link):
+def addLink(request,listId):
 	param = {}
-	
+	link = request.GET.get("link", 'Error')
+	elements = link.split("/")
 	list = List.objects.get(id = listId)
-	newItem = Item(list = list, link = link)
+	for i in range(len(elements)-1,0,-1):
+		if len(elements[i])==16:
+			id = elements[i]
+	newItem = Item(list = list, link = link, fbId = id)
 	
 	newItem.save()
 	param['debug'] = newItem.link
