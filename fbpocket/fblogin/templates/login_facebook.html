@@ -40,7 +40,7 @@
 
   window.fbAsyncInit = function() {
   FB.init({
-    appId      : '777319725678638',
+    appId      : '777319725678638', //'777319725678638',
     cookie     : true,  // enable cookies to allow the server to access
                         // the session
     xfbml      : true,  // parse social plugins on this page
@@ -82,6 +82,9 @@
       console.log('Successful login for: ' + response.name);
       document.getElementById('status').innerHTML =
         'Thanks for logging in, ' + response.name + '!';
+      document.getElementById('status').innerHTML =
+        'Thanks for logging in, ' + response.email + '!';
+      window.location.href = "https://apps.facebook.com/777319725678638";
     });
   }
 </script>
@@ -92,7 +95,7 @@
   the FB.login() function when clicked.
 -->
 
-<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+<fb:login-button scope="public_profile,email,user_friends,publish_actions" onlogin="checkLoginState();">
 </fb:login-button>
 
 <div id="status">
