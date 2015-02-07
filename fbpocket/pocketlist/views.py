@@ -128,8 +128,8 @@ def addLink(request):
 
 	#data = json.loads(json_data)
 	
-	litsId = data['listId']
-	link = data['postUrl']
+	litsId = json_data['listId']
+	link = json_data['postUrl']
 	list = List.objects.get(id = listId)
 	newItem = Item(list = list, link = link)
 	
