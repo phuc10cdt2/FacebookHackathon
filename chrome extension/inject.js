@@ -8,7 +8,7 @@ var injected = injected || (function(){
 	methods.addLink = function(){
 		$("body").append("<div id=\"dialogDiv\" style=\"display:none\"></div>");
 
-		var nodes = document.getElementsByClassName("_3dp _29k");
+		var nodes = $("._3dp._29k");
 
 
 		if (window.jQuery) {
@@ -19,9 +19,14 @@ var injected = injected || (function(){
 		else{
 			alert('not loaded');
 		}
-		for (var i = nodes.length - 1; i >= 0; i--) {
+		console.log(nodes.length);
+
+		for (var i = 0; i < nodes.length -1 ; i++) {
 			// var postUrl = '';
-			var postUrl = nodes[i].getElementsByTagName("a")[1].getAttribute('href');
+			
+			var postUrl = $("span.fsm.fwn.fcg")[i];
+			postUrl = postUrl.getElementsByTagName('a')[0].getAttribute('href');
+			console.log(postUrl);
 			(function(postUrl){
 				link = document.createElement("a");
 				link.id = "bookmark";
@@ -74,15 +79,24 @@ var injected = injected || (function(){
 	}
 	function savePost(postUrl, list_id){
 		closeDialog();
+		var fullUrl;
 		console.log("saving  " + postUrl + "to list " + list_id);
-		var fullUrl = 'wwww.facebook.com' + postUrl + '/';
-		var sentObject = {};
-		sentObject.list_id = list_id;
-		sentObject.postUrl = postUrl;
+		if(postUrl.indexOf("www.facebook.com")>-1){
+			console.log('have');
+			fullUrl=postUrl;
+		}
+		else
+			fullUrl = 'www.facebook.com' + postUrl;
+
+		// for (var i = fullUrl.length - 1; i >= 0; i--) {
+		// 	if(fullUrl[i] == '/')
+		// 		fullUrl = fullUrl.substr(0,i) + '|' + fullUrl.substr(i+1);
+		// }
+		console.log(fullUrl);
+		fullUrl = fullUrl + '/';
 		$.ajax({
-			url: 'https://cymn1.pythonanywhere.com/add/',
-			type: 'POST',
-			data: sentObject,
+			url: 'https://cymn1.pythonanywhere.com/add/' + list_id + '/?link=' + fullUrl,
+			type: 'GET',
 			success: function(data) {
 				alert('Successfully saved!');
 			},
