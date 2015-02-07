@@ -25,8 +25,6 @@ def index(request):
 
 def view(request,listId):
 	
-	
-	
 	param={}
 	param['list'] = List.objects.get(id = listId)
 	items = Item.objects.filter(list_id= listId)
