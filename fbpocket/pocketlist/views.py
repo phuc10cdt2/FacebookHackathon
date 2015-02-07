@@ -9,7 +9,8 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 import simplejson, json
 import django.utils.simplejson as json
 from pocketlist.models import List
-
+from django.views.decorators.csrf import ensure_csrf_cookie
+@ensure_csrf_cookie
 
 def index(request):
 	param = {}
