@@ -58,7 +58,6 @@ def new(request):
 		newList.description = des
 		newList.status = 'public'
 		newList.save()
-<<<<<<< HEAD
 		param['mes']= "<div class='alert alert-success'>A new list has been created successfully</div>"
 		param['list'] = newList
 		param['items'] = []
@@ -67,7 +66,7 @@ def new(request):
 	return render_to_response('newlist.html',param,context_instance=RequestContext(request))
 
 def addLink(request):
-=======
+
 	return render_to_response(
 				'newlist.html',
 				param,
@@ -75,7 +74,6 @@ def addLink(request):
 	)
 #this function is not completed
 def addLink(request, list_id):
->>>>>>> 2dcd222f08099673f2841c2a1ed4646732ad77d4
 	param = {}
 	print 'add link to list id = ' + list_id
 	l = List.objects.filter(id = list_id)
