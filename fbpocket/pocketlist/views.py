@@ -122,14 +122,9 @@ def edit(request, list_id):
 		return render_to_response('editlist.html',param,context_instance=RequestContext(request))
 
 @csrf_exempt
-def addLink(request):
+def addLink(request,listId,link):
 	param = {}
-	json_data = simplejson.loads(request.raw_post_data)
 	
-	#data = json.loads(json_data)
-	
-	litsId = json_data['listId']
-	link = json_data['postUrl']
 	list = List.objects.get(id = listId)
 	newItem = Item(list = list, link = link)
 	
