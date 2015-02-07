@@ -96,8 +96,8 @@ def new(request):
 
 def addLink(request, listId, link):
 	param = {}
-	listId = 1
-	link = "123123123"
+	param['listId'] = request.GET['listId']
+	param['link'] = request.GET['link']
 	list = List.objects.get(id = listId)
 	newItem = Item(list = list, link = link)
 	newItem.save()
