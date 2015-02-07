@@ -11,7 +11,7 @@ import simplejson, json
 def index(request):
 	param = {}
 	print api_list(request,'userId')
-	lists = List.objects.all()
+	lists = List.objects.filter(userId = 88)
 	for l in lists:
 		l.itemcount = Item.objects.filter(list = l).count()
 	
@@ -135,10 +135,18 @@ def deleteList(request, listId):
 				context_instance=RequestContext(request)
 	)
 def api_list(request,userId):
-	lists = List.objects.filter(userId = "userId")
-	data = {}
+	param = {}
+	lists = List.objects.filter(userId = "88")
+	data = []
 	for l in lists:
-		data[l.id] = l.title
+		line = {}
+		line['id'] = l.id
+		line['title'] = l.title
+		data.append(line)
 	returnJson = json.dumps(data)
-	return returnJson
-	
+	param['debug'] = returnJson
+	#return returnJson
+	return render_to_response(
+				'debug.html',
+				param,
+				context_instance=RequestContext(request))
