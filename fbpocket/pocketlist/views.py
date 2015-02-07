@@ -130,7 +130,7 @@ def addLink(request,listId,link):
 	
 	newItem.save()
 	param['debug'] = newItem.link
-	return HttpResponse(data, content_type="application/json")
+	return HttpResponse(1, content_type="application/json")
 	
 def getList(request, list_id):
 	param = {}
