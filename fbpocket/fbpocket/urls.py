@@ -12,6 +12,6 @@ urlpatterns = patterns('',
 	(r'^admin/', include(admin.site.urls)),
 	(r'^$', views.index),
 	(r'^new/', views.new),
-	(r'^add/', views.addLink),
+	(r'^add/(?P<list_id>\d+)/$', views.addLink),
 	(r'^list/(?P<list_id>\d+)/$', views.getList)
 )

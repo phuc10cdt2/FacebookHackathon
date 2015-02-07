@@ -38,9 +38,14 @@ def new(request):
 				param,
 				context_instance=RequestContext(request)
 	)
-
-def addLink(request):
+#this function is not completed
+def addLink(request, list_id):
 	param = {}
+	print 'add link to list id = ' + list_id
+	l = List.objects.filter(id = list_id)
+	newLink = Item()
+	newLink.link = ""
+	newLink.list = l
 	return render_to_response(
 				'newlink.html',
 				param,
