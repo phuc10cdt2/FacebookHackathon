@@ -10,10 +10,14 @@ def index(request):
 	param = {}
 	lists = List.objects.all()
 	param['lists'] = lists
+	for l in lists:
+		l.items = Item.objects.filter(list=l)
+		l.itemcount = len(l.items)
+		l.items[:3]
 	return render_to_response(
-				'index.html',
-				param,
-				context_instance=RequestContext(request)
+		'index.html',
+		param,
+		context_instance=RequestContext(request)
 	)
 
 def new(request):
