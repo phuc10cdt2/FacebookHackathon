@@ -123,8 +123,8 @@
 
 
 	<a href = "/"><button class="btn btn-xs"><< Back to list</button></a><br/><br/>
-	<h2>{{list.title}}</h2>
-	<small > By {{owner}} at {{list.created_at}} </small>
+	<h2><img width ="20px" src= {%if list.status == 'public'%} "/static/image/public.png"{% else %} "/static/image/private.png" {% endif %}/> {{list.title}} </h2>
+	<small > Created at {{list.created_at}} </small>
 	<br/><br/>
 	{{mes|safe}}
 	<div class = "thumbnail">
@@ -167,7 +167,7 @@
 			</div>
 		{% endif %}
 		
-		<small class="pull-right"><a href = "/deleteList/{{list.id}}" >Delete this list permanently</a></small>
+		<small class="pull-right"><a href = "/update/{{list.id}}" >Update </a> | <a href = "/deleteList/{{list.id}}" > Delete this list permanently</a></small>
 		<br/>		
 		</div>
 	</div>	

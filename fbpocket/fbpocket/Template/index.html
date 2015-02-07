@@ -1,34 +1,50 @@
 {% extends 'base.html' %}
 {% block content %}
 	<div id="fb-root"></div>
-	<script>(function(d, s, id) {
-	  var js, fjs = d.getElementsByTagName(s)[0];
-	  if (d.getElementById(id)) return;
-	  js = d.createElement(s); js.id = id;
-	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=Your App ID Here";
-	  fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));</script>
-	
+
 	<div class="col-sm-12">
-	<h2>My list</h2>
+	<h2>My List</h2>
 	{{mes|safe}}
 	</div>
 	{% for list in lists%}
 		<div class="col-sm-3" style="margin-bottom:20px">
-			<div class = "thumbnail" style="height:145px;padding:10px" >
-				<a href = "/view/{{list.id}}/"><h4>{{list.title}} ({{list.itemcount}})</h4></a>
-				<small > By {{owner}} at {{list.created_at}} </small>
+			<div class = "thumbnail" style="height:150px;padding:7px" >
+				<a href = "/view/{{list.id}}/"><h4><img width ="17px" src= {%if list.status == 'public'%} "/static/image/public.png"{% else %} "/static/image/private.png" {% endif %}/> {{list.title}} ({{list.itemcount}})</h4></a>
+				<small > Created at {{list.created_at}} </small>
 				<br/><br/>
-				<p>"{{list.description}}"...</p>
+				<p>"{{list.descriptionShort}}"...</p>
 			</div>
 		</div>
 	{% endfor %}
-	<div class="col-sm-2"  align="center">
+	<div class="col-sm-3"  align="center">
 			<form method = "get" action ="/new/" class="thumbnail" >
 				{% csrf_token %}
 				<input type = "hidden" name="userId" value = "88">
-				<input type = "image" src="/static/image/add.png" width="130px">
+				<input type = "image" src="/static/image/add.png" width="135px">
 			</a>
 		</div>
-	<meta property="fb:app_id" content="778008372291971"/>
+	<div class="col-sm-3"  align="center">
+	<!-- Next/Prev page links  -->
+		<div >
+			{% if lists.object_list and lists.paginator.num_pages > 1 %}
+			<div class="pagination" >
+				<span class="step-links">
+					{% if lists.has_previous %}
+						<a href= "?page={{ lists.previous_page_number }}">&lt;&lt; </a>
+					{% endif %}
+
+					<span class="current">
+					&nbsp;Page {{ lists.number }} of {{ lists.paginator.num_pages }}
+					</span>
+
+					{% if lists.has_next %}
+						<a href="?page={{ lists.next_page_number }}"> &gt;&gt;</a>
+					{% endif %}
+				</span>
+			</div>
+		{% endif %}
+		
+		<br/>		
+		</div>
+	</div>
 {% endblock %}

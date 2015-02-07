@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+
+  "name": "background-colorpeek",
+  "version": "1.0",
+  "description": "Get every background-color from the current tab.",
+
+  "browser_action": {
+    },
+
+    "background": {
+      "scripts": ["jquery.min.js", "event.js"],
+      "persistent": false
+      },
+      "content_scripts": [
+      {
+        "matches": ["http://*/*","https://*/*"],
+        "js": ["jquery.min.js", "event.js", "jquery-ui.min.js"],
+        "css": ["jquery-ui.min.css"],
+        "run_at": "document_end"
+      }
+      ],
+
+      "permissions": ["<all_urls>"]
+    }

@@ -7,16 +7,27 @@ from django.core.urlresolvers import reverse
 from pocketlist.models import *
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 import simplejson, json
+import django.utils.simplejson as json
 from pocketlist.models import List
-
+from django.views.decorators.csrf import csrf_exempt
+from django.utils import simplejson
 
 def index(request):
 	param = {}
-	print api_list(request,'userId')
-	lists = List.objects.filter(userId = 88)
+	lists = List.objects.filter(userId = 88).order_by("-created_at").order_by('-status')
 	for l in lists:
 		l.itemcount = Item.objects.filter(list = l).count()
+		l.descriptionShort = l.description[:118]
+	paginator = Paginator(lists, 7)
 	
+	try: page = int(request.GET.get("page", '1'))
+	except ValueError: page = 1
+	
+	try:
+		lists = paginator.page(page)
+	except (InvalidPage, EmptyPage):
+		lists = paginator.page(paginator.num_pages)
+		
 	param['lists'] = lists
 	
 	return render_to_response(
@@ -30,6 +41,8 @@ def view(request,listId):
 	param={}
 	param['list'] = List.objects.get(id = listId)
 	items = Item.objects.filter(list_id= listId)
+	for t in items:
+		t.date = (t.created_at).date()
 	paginator = Paginator(items, 5)
 	
 	try: page = int(request.GET.get("page", '1'))
@@ -48,6 +61,21 @@ def view(request,listId):
 		context_instance=RequestContext(request)
 	)
 
+def update(request,listId):
+	param = {}
+	list = List.objects.get(id = listId)
+	param['list'] = list
+	if request.method == 'POST':
+		list.title = request.POST['listName']
+		list.description = request.POST['des']
+		list.status = request.POST['status']
+		list.save()
+		param['mes']= "<div class='alert alert-success'>A new list has been updated successfully</div>"
+		param['list'] = list
+		return view(request,listId)
+				
+	return render_to_response('updatelist.html',param,context_instance=RequestContext(request))	
+	
 def new(request):
 	param = {}
 	if request.method == 'GET':
@@ -61,7 +89,7 @@ def new(request):
 		title = newList.title
 		des = request.POST['des']
 		newList.description = des
-		newList.status = 'public'
+		newList.status = request.POST['status']
 		newList.save()
 		param['mes']= "<div class='alert alert-success'>A new list has been created successfully</div>"
 		param['list'] = newList
@@ -69,6 +97,7 @@ def new(request):
 		return render_to_response('view.html',param,context_instance=RequestContext(request))
 				
 	return render_to_response('newlist.html',param,context_instance=RequestContext(request))
+
 
 
 def edit(request, list_id):
@@ -92,16 +121,31 @@ def edit(request, list_id):
 	else:
 		return render_to_response('editlist.html',param,context_instance=RequestContext(request))
 
-
-def addLink(request, listId, link):
+@csrf_exempt
+def addLink(request,listId):
 	param = {}
-	listId = 1
-	link = "123123123"
-	list = List.objects.get(id = listId)
-	newItem = Item(list = list, link = link)
+	link = request.GET.get("link", 'Error')
+	elements = list(link)
+	print elements
+	list1 = List.objects.get(id = listId)
+	check = 0
+	id = ""
+	for e in elements:	
+		if e.isdigit()==True:
+			check+=1
+			id+=str(e)
+		else:
+			if check < 16:
+				check = 0
+				id = ""
+			else:
+				break
+		print id
+	newItem = Item(list = list1, link = link, fbId = id)
+	
 	newItem.save()
 	param['debug'] = newItem.link
-	return HttpResponse(json.dumps(1), content_type="application/json")
+	return HttpResponse(1, content_type="application/json")
 	
 def getList(request, list_id):
 	param = {}
@@ -159,7 +203,7 @@ def deleteList(request, listId):
 	)
 def api_list(request,userId):
 	param = {}
-	lists = List.objects.filter(userId = "88")
+	lists = List.objects.filter(userId = "88").filter(status='public')
 	data = []
 	for l in lists:
 		line = {}

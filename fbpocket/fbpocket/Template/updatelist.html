@@ -2,10 +2,9 @@
 {% block content %}
 
 <a href = "/"><button class="btn btn-xs"><< Back to list</button></a><br/><br/>
-<h2>Create New List</h2>
+<h2><img width ="20px" src= {%if list.status == 'public'%} "/static/image/public.png"{% else %} "/static/image/private.png" {% endif %}/> Create New List</h2>
 <div class="thumbnail">
-<form  action = '/new/' method = 'post'>
-<input type="hidden" name="userId" value={{userId}}>
+<form  action = '/update/{{list.id}}/' method = 'post'>
 {% csrf_token %}
 	<div class = 'form-group' style="margin-bottom:20px">
 		<label for='listName' class = 'col-sm-2 control-label'>
