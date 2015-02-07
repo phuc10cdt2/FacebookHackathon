@@ -111,7 +111,7 @@
 				str = '#' + item['id'] + '_' + keys[i];
 				console.log(str);
 				if (keys[i] == 'icon_src' || keys[i] == 'picture_src') {
-					$(str).src = item[keys[i]];
+					$(str).attr("src", item[keys[i]]);
 				}
 				else {
 					$(str).html(item[keys[i]]);
@@ -145,9 +145,11 @@
 		{% for item in items%}
 			<tr>
 			<td id="{{item.fbId}}" width="85%">
-				<img id="{{item.fbId}}_picture_src" src="{% static 'image/profilepic.png' %}" height="100" align="left" style="margin-right: 5px">
-				<p><a href="" id="{{item.fbId}}_from">from</a> by <span id="{{item.fbId}}_created_time" style="font-size: 11px">created_time</span></p>
-				<p id="{{item.fbId}}_description">description</p>
+				<div style="width: 100px; height: 100px; overflow: hidden; float: left; margin-right: 5px">
+					<img id="{{item.fbId}}_picture_src" src="{% static 'image/profilepic.png' %}" height="100" width="auto" align="left" style="margin-right: 5px">
+				</div>
+				<p><a href="" id="{{item.fbId}}_from">Dao Duy Bao</a> by <span id="{{item.fbId}}_created_time" style="font-size: 11px">created_time</span></p>
+				<p id="{{item.fbId}}_description">Amazing post. Check it out!!!</p>
 				<!--<img id="{{item.fbId}}_icon_src" src="" height="100" width="100" align="left" style="margin-right: 5px">-->
 				<img id="{{item.fbId}_profileimg" src="" style="width: auto"/>
 				<a href="" id="{{item.fbId}}_link">link</a>
