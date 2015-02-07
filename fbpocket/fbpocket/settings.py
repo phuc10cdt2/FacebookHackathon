@@ -14,7 +14,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'fbpocket.db',              # Or path to database file if using sqlite3.
+        'NAME':  os.path.join(ROOT_PATH, 'fbpocket.db'),              # Or path to database file if using sqlite3.
     }
 }
 
