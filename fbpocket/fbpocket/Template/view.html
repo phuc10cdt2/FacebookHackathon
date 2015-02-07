@@ -88,10 +88,16 @@
 				update(response)
 			});
 		}
-		FB.api("/me/picture", function(response) {
-		  document.getElementById('avatar').innerHTML =
-		  'Avatart url: '+response.data.url;
+		FB.api("/me", function(response) {
+			console.log(response);
+			$('#username').html(response.name);
 		});
+
+		FB.api("/me/picture", function(response) {
+			console.log(response);
+			$('#avatar').attr('src', response.data.url);
+		});
+
 	  }
 
 	function update(resp) {
@@ -148,11 +154,11 @@
 				<div style="width: 100px; height: 100px; overflow: hidden; float: left; margin-right: 5px">
 					<img id="{{item.fbId}}_picture_src" src="{% static 'image/profilepic.png' %}" height="100" width="auto" align="left" style="margin-right: 5px">
 				</div>
-				<p><a href="" id="{{item.fbId}}_from">Dao Duy Bao</a> by <span id="{{item.fbId}}_created_time" style="font-size: 11px">created_time</span></p>
+				<p><a href="" id="{{item.fbId}}_from">Dao Duy Bao</a> by <span id="{{item.fbId}}_created_time" style="font-size: 11px">2012-02-10T11:07:29+0000</span></p>
 				<p id="{{item.fbId}}_description">Amazing post. Check it out!!!</p>
 				<!--<img id="{{item.fbId}}_icon_src" src="" height="100" width="100" align="left" style="margin-right: 5px">-->
 				<img id="{{item.fbId}_profileimg" src="" style="width: auto"/>
-				<a href="" id="{{item.fbId}}_link">link</a>
+				<small><a href="" id="{{item.fbId}}_link">link</a></small>
 			</td>
 			<td><a href="{{item.link}}">View full article</a></td>
 			<td style="text-align: center"><a href ="/deleteItem/{{item.id}}/{{list.id}}/"><button class="btn btn-xs">x</button></a></td>
