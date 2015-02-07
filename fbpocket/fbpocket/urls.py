@@ -12,4 +12,5 @@ urlpatterns = patterns('',
 	(r'^$', views.index),
 	(r'^new/', views.new),
 	(r'^add/', views.addLink),
+	(r'^list/(?P<list_id>\d+)/$', views.getList)
 )

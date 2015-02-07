@@ -18,6 +18,17 @@ def index(request):
 
 def new(request):
 	param = {}
+	if request.method == 'POST':
+		print 'new list request'
+		newList = List()
+		newList.title = request.POST['listName']
+		title = newList.title
+		print "list title = " + title
+		des = request.POST['des']
+		newList.description = des
+		print "list des = " +  des
+		newList.status = 'public'
+		newList.save()
 	return render_to_response(
 				'newlist.html',
 				param,
@@ -28,6 +39,16 @@ def addLink(request):
 	param = {}
 	return render_to_response(
 				'newlink.html',
+				param,
+				context_instance=RequestContext(request)
+	)
+def getList(request, list_id):
+	param = {}
+	print 'get list with id = ' + list_id
+	list = List.objects.filter(id = list_id)
+	print list
+	return render_to_response(
+				'list.html',
 				param,
 				context_instance=RequestContext(request)
 	)
