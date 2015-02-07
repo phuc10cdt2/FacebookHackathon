@@ -10,24 +10,54 @@ def index(request):
 	param = {}
 	lists = List.objects.all()
 	param['lists'] = lists
+	for l in lists:
+		l.items = Item.objects.filter(list=l)
+		l.itemcount = len(l.items)
+		l.items[:3]
 	return render_to_response(
-				'index.html',
-				param,
-				context_instance=RequestContext(request)
+		'index.html',
+		param,
+		context_instance=RequestContext(request)
 	)
 
 def new(request):
 	param = {}
+	if request.method == 'POST':
+		print 'new list request'
+		newList = List()
+		newList.title = request.POST['listName']
+		title = newList.title
+		print "list title = " + title
+		des = request.POST['des']
+		newList.description = des
+		print "list des = " +  des
+		newList.status = 'public'
+		newList.save()
 	return render_to_response(
 				'newlist.html',
 				param,
 				context_instance=RequestContext(request)
 	)
-
-def addLink(request):
+#this function is not completed
+def addLink(request, list_id):
 	param = {}
+	print 'add link to list id = ' + list_id
+	l = List.objects.filter(id = list_id)
+	newLink = Item()
+	newLink.link = ""
+	newLink.list = l
 	return render_to_response(
 				'newlink.html',
+				param,
+				context_instance=RequestContext(request)
+	)
+def getList(request, list_id):
+	param = {}
+	print 'get list with id = ' + list_id
+	list = List.objects.filter(id = list_id)
+	print list
+	return render_to_response(
+				'list.html',
 				param,
 				context_instance=RequestContext(request)
 	)
