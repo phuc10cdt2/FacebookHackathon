@@ -63,7 +63,7 @@ def view(request,listId):
 
 def update(request,listId):
 	param = {}
-	list = List.objects.get(id = listId)
+	list = List.objects.get(id=listId)
 	param['list'] = list
 	if request.method == 'POST':
 		list.title = request.POST['listName']
