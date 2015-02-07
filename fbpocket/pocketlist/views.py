@@ -8,8 +8,26 @@ from pocketlist.models import *
 
 def index(request):
 	param = {}
+	lists = List.objects.all()
+	param['lists'] = lists
 	return render_to_response(
 				'index.html',
+				param,
+				context_instance=RequestContext(request)
+	)
+
+def new(request):
+	param = {}
+	return render_to_response(
+				'newlist.html',
+				param,
+				context_instance=RequestContext(request)
+	)
+
+def addLink(request):
+	param = {}
+	return render_to_response(
+				'newlink.html',
 				param,
 				context_instance=RequestContext(request)
 	)
