@@ -9,7 +9,7 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 import simplejson, json
 import django.utils.simplejson as json
 from pocketlist.models import List
-from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.csrf import csrf_exempt
 
 def index(request):
 	param = {}
@@ -120,7 +120,7 @@ def edit(request, list_id):
 	else:
 		return render_to_response('editlist.html',param,context_instance=RequestContext(request))
 
-@ensure_csrf_cookie
+@csrf_exempt
 def addLink(request):
 	param = {}
 	json_data = request.read()
