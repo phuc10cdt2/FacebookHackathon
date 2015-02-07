@@ -10,7 +10,6 @@ import simplejson, json
 import django.utils.simplejson as json
 from pocketlist.models import List
 from django.views.decorators.csrf import ensure_csrf_cookie
-@ensure_csrf_cookie
 
 def index(request):
 	param = {}
@@ -121,7 +120,7 @@ def edit(request, list_id):
 	else:
 		return render_to_response('editlist.html',param,context_instance=RequestContext(request))
 
-
+@ensure_csrf_cookie
 def addLink(request):
 	param = {}
 	json_data = request.read()
