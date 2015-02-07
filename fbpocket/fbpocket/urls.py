@@ -13,4 +13,7 @@ urlpatterns = patterns('',
 	(r'^$', views.index),
 	(r'^new/', views.new),
 	(r'^add/', views.addLink),
+	(r'^view/(?P<listId>\d+)/$', views.view),
+	(r'^deleteItem/(?P<itemId>\d+)/(?P<listId>\d+)/$', views.deleteItem),
+	(r'^deleteList/(?P<listId>\d+)/$', views.deleteList),
 )
