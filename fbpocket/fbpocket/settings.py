@@ -109,7 +109,7 @@ ROOT_URLCONF = 'fbpocket.urls'
 WSGI_APPLICATION = 'fbpocket.wsgi.application'
 
 TEMPLATE_DIRS = (
-	os.path.join(ROOT_PATH,'Templates').replace('\\','/')
+	os.path.join(ROOT_PATH,'Template').replace('\\','/')
 )
 
 INSTALLED_APPS = (
