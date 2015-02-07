@@ -11,9 +11,14 @@ urlpatterns = patterns('',
     (r'^fblogin/', include('fblogin.urls')),
 	(r'^admin/', include(admin.site.urls)),
 	(r'^$', views.index),
+<<<<<<< HEAD
 	(r'^new/', views.new),
 	(r'^add/', views.addLink),
 	(r'^view/(?P<listId>\d+)/$', views.view),
 	(r'^deleteItem/(?P<itemId>\d+)/(?P<listId>\d+)/$', views.deleteItem),
 	(r'^deleteList/(?P<listId>\d+)/$', views.deleteList),
+=======
+	(r'^add/(?P<list_id>\d+)/$', views.addLink),
+	(r'^list/(?P<list_id>\d+)/$', views.getList),
+>>>>>>> 2dcd222f08099673f2841c2a1ed4646732ad77d4
 )

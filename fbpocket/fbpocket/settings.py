@@ -119,6 +119,7 @@ INSTALLED_APPS = (
     'social_auth',
 	'pocketlist',
 	'django.contrib.admin',
+    'fblogin',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -162,3 +163,4 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.facebook.FacebookBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
+
