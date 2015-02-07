@@ -6,5 +6,6 @@ from pocketlist import views
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-	(r'^$', views.index),
+	url(r'^$', views.index),
+    url(r'^fblogin/', include('fblogin.urls')),
 )
