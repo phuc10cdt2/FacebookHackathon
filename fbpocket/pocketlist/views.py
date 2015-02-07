@@ -145,8 +145,5 @@ def api_list(request,userId):
 		data.append(line)
 	returnJson = json.dumps(data)
 	param['debug'] = returnJson
-	#return returnJson
-	return render_to_response(
-				'debug.html',
-				param,
-				context_instance=RequestContext(request))
+	return returnJson
+	
