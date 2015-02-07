@@ -27,8 +27,6 @@ def index(request):
 
 def view(request,listId):
 	
-	
-	
 	param={}
 	param['list'] = List.objects.get(id = listId)
 	items = Item.objects.filter(list_id= listId)
@@ -102,7 +100,8 @@ def addLink(request, listId, link):
 	list = List.objects.get(id = listId)
 	newItem = Item(list = list, link = link)
 	newItem.save()
-	return 
+	param['debug'] = newItem.link
+	return HttpResponse(json.dumps(1), content_type="application/json")
 	
 def getList(request, list_id):
 	param = {}
@@ -169,5 +168,4 @@ def api_list(request,userId):
 		data.append(line)
 	returnJson = json.dumps(data)
 	param['debug'] = returnJson
-	return returnJson
-	
+	return HttpResponse(json.dumps(returnJson), content_type="application/json")
