@@ -10,7 +10,7 @@ import simplejson, json
 
 def index(request):
 	param = {}
-	
+	print api_list(request,'userId')
 	lists = List.objects.all()
 	for l in lists:
 		l.itemcount = Item.objects.filter(list = l).count()
@@ -56,8 +56,8 @@ def new(request):
 		newList = List()
 		newList.title = request.POST['listName']
 		newList.userId = request.POST['userId']
-		print userId
-		print "-----------------"
+		#print userId
+		#print "-----------------"
 		title = newList.title
 		des = request.POST['des']
 		newList.description = des
@@ -78,9 +78,7 @@ def addLink(request, listId, link):
 	list = List.objects.get(id = listId)
 	newItem = Item(list = list, link = link)
 	newItem.save()
-	print newItem.list
-	print newItem.link
-	return True
+	return 
 	
 def getList(request, list_id):
 	param = {}
