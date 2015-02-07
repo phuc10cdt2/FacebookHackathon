@@ -27,8 +27,9 @@
 		{% if items|length == 0 %}
 			<div class = "alert alert-warning">This list is empty</div>
 		{% endif  %}
-		<table width="100%">
+		<table width="100%" border="1">
 		{% for item in items%}
+<<<<<<< HEAD
 			<tr>
 				<td width="96%">
 					<table>
@@ -40,6 +41,16 @@
 					</table>
 				</td>
 				<td><a href ="/deleteItem/{{item.id}}/{{list.id}}/"><button class="btn btn-xs">x</button></a></td>
+=======
+			<tr><td id="{{item.link}}" style="height: 100px; overflow: hidden; margin-bottom: 20px">
+				<img src="" alt="profile picture" height="100" width="100" align="left" style="margin-right: 5px">
+				<p>This is title</p>
+				<p><span style="font-size: 11px">By at 23.11.2014</span></p>
+				Item content
+				<!--<td width="96%">{{item.link}}</td>-->
+			</td>
+			<td style="text-align: center"><a href ="/deleteItem/{{item.id}}/{{list.id}}/"><button class="btn btn-xs">x</button></a></td>
+>>>>>>> 43d799f615df2b0a4264c7a1e40335f00c5c2102
 			</tr>
 		{% endfor %}
 		</table>
@@ -70,6 +81,28 @@
 		</div>
 	</div>	
 	<br/>	
+	<div class="fb-like" data-href="http://172.18.146.23:8000/view/{{list.id}}/" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+
+<script type="text/javascript">
+	item_links = ['123', '456', '789'];
+
+	$( document ).ready(function() {
+		{% for item in items %}
+			$('#{{item.link}}').html(
+			'<tr><td id="{{item.link}}" style="height: 100px; overflow: hidden; margin-bottom: 20px">' +
+				'<img src="" alt="profile picture" height="100" width="100" align="left" style="margin-right: 5px">'
+				+ '<p>This is title</p>
+				+ '<p><span style="font-size: 11px">By at 23.11.2014</span></p>'
+				+ 'Item content'
+				+ '<!--<td width="96%">{{item.link}}</td>-->'
+			+ '</td>'
+			+ '<td style="text-align: center"><a href ="/deleteItem/{{item.id}}/{{list.id}}/"><button class="btn btn-xs">x</button></a></td>'
+			+ '</tr>'
+			);
+		{% endfor %}
+	});
+
+</script>
 
 	<div class="fb-like" data-href="https://cymn1.pythonanywhere.com/view/{{list.id}}/" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
 	<br>
