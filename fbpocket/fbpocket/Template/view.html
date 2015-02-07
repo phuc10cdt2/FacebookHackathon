@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-	<div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
@@ -18,6 +17,111 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
+<html>
+<head>
+<title>Facebook Login JavaScript Example</title>
+<meta charset="UTF-8">
+</head>
+<body>
+<script>
+	  // This is called with the results from from FB.getLoginStatus().
+	  function statusChangeCallback(response) {
+		if (response.status === 'connected') {
+		  // Logged into your app and Facebook.
+		  testAPI();
+		} else if (response.status === 'not_authorized') {
+		  // The person is logged into Facebook, but not your app.
+		  document.getElementById('status').innerHTML = 'Please log ' +
+			'into this app.';
+		} else {
+		  // The person is not logged into Facebook, so we're not sure if
+		  // they are logged into this app or not.
+		  document.getElementById('status').innerHTML = 'Please log ' +
+			'into Facebook.';
+		}
+	  }
+
+	  // This function is called when someone finishes with the Login
+	  // Button.  See the onlogin handler attached to it in the sample
+	  // code below.
+	  function checkLoginState() {
+		FB.getLoginStatus(function(response) {
+		  statusChangeCallback(response);
+		});
+	  }
+
+	  window.fbAsyncInit = function() {
+	  FB.init({
+		appId      : '777319725678638',
+		//appId: '777319725678638',
+		cookie     : true,  // enable cookies to allow the server to access
+							// the session
+		xfbml      : true,  // parse social plugins on this page
+		version    : 'v2.1' // use version 2.1
+	  });
+	  FB.getLoginStatus(function(response) {
+		statusChangeCallback(response);
+	  });
+
+	  };
+
+	  // Load the SDK asynchronously
+	  (function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/en_US/sdk.js";
+		fjs.parentNode.insertBefore(js, fjs);
+	  }(document, 'script', 'facebook-jssdk'));
+
+	  // Here we run a very simple test of the Graph API after login is
+	  // successful.  See statusChangeCallback() for when this call is made.
+	  function testAPI() {
+		for (i in listId){
+			FB.api("/"+listId[i], function(response) {
+				console.log(response);
+				update(response)
+			});
+		}
+		FB.api("/me/picture", function(response) {
+		  document.getElementById('avatar').innerHTML =
+		  'Avatart url: '+response.data.url;
+		});
+	  }
+
+	function update(resp) {
+		item = {
+			'id': resp.id,
+			'profileimg': resp.img,
+			'created_time': resp.created_time,
+			'from': resp.from.name,
+			'icon_src': resp.icon,
+			'link': resp.link,
+			'picture_src': resp.picture,
+			'description': resp.description
+		};
+		var keys = Object.keys(item);
+		for(var i in keys) {
+			if (item[keys[i]] !== undefined) {
+				str = '#' + item['id'] + '_' + keys[i];
+				console.log(str);
+				$(str).html(item[keys[i]]);
+			}
+		}
+	}
+
+	$( document ).ready(function() {
+		listId = [];
+		{% for item in items %}
+			listId.push('{{item.link}}');
+		{% endfor %}
+		console.log(listId);
+		checkLoginState();
+	});
+
+</script>
+
+
 	<a href = "/"><button class="btn btn-xs"><< Back to list</button></a><br/><br/>
 	<h2>{{list.title}}</h2>
 	<small > By {{owner}} at {{list.created_at}} </small>
@@ -29,19 +133,20 @@
 		{% endif  %}
 		<table width="100%" border="1">
 		{% for item in items%}
-			<tr><td id="{{item.link}}" style="height: 100px; overflow: hidden; margin-bottom: 20px">
-				<img src="" alt="profile picture" height="100" width="100" align="left" style="margin-right: 5px">
-				<p>This is title</p>
-				<p><span style="font-size: 11px">By at 23.11.2014</span></p>
-				Item content
-				<!--<td width="96%">{{item.link}}</td>-->
+			<tr>
+			<td id="{{item.link}}" style="height: 100px; overflow: hidden; margin-bottom: 20px">
+				<img id="{{item.link}_profileimg" src="" height="100" width="100" align="left" style="margin-right: 5px">
+				<p><span id="{{item.link}}_from">from</span> by <span id="{{item.link}}_created_time" style="font-size: 11px">created_time</span></p>
+				<p id="{{item.link}}_description">description</p>
+				<!--<img id="{{item.link}}_icon_src" src="" height="100" width="100" align="left" style="margin-right: 5px">-->
+				<p id="{{item.link}}_link">link</p>
+
 			</td>
 			<td style="text-align: center"><a href ="/deleteItem/{{item.id}}/{{list.id}}/"><button class="btn btn-xs">x</button></a></td>
 			</tr>
 		{% endfor %}
 		</table>
-	
-	
+
 	<!-- Next/Prev page links  -->
 		<div >
 			{% if items.object_list and items.paginator.num_pages > 1 %}
@@ -69,26 +174,6 @@
 	<br/>	
 	<div class="fb-like" data-href="http://172.18.146.23:8000/view/{{list.id}}/" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
 
-<script type="text/javascript">
-	item_links = ['123', '456', '789'];
-
-	$( document ).ready(function() {
-		{% for item in items %}
-			$('#{{item.link}}').html(
-			'<tr><td id="{{item.link}}" style="height: 100px; overflow: hidden; margin-bottom: 20px">' +
-				'<img src="" alt="profile picture" height="100" width="100" align="left" style="margin-right: 5px">'
-				+ '<p>This is title</p>
-				+ '<p><span style="font-size: 11px">By at 23.11.2014</span></p>'
-				+ 'Item content'
-				+ '<!--<td width="96%">{{item.link}}</td>-->'
-			+ '</td>'
-			+ '<td style="text-align: center"><a href ="/deleteItem/{{item.id}}/{{list.id}}/"><button class="btn btn-xs">x</button></a></td>'
-			+ '</tr>'
-			);
-		{% endfor %}
-	});
-
-</script>
 
 	<div class="fb-like" data-href="https://cymn1.pythonanywhere.com/view/{{list.id}}/" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
 	<br>
