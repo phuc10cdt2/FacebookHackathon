@@ -135,7 +135,7 @@ def addLink(request,listId):
 			check+=1
 			id+=str(e)
 		else:
-			if check < 16:
+			if check < 14:
 				check = 0
 				id = ""
 			else:
