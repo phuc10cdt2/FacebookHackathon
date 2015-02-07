@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from pocketlist.models import *
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 import simplejson, json
+import django.utils.simplejson as json
 
 def index(request):
 	param = {}
@@ -94,15 +95,19 @@ def new(request):
 				
 	return render_to_response('newlist.html',param,context_instance=RequestContext(request))
 
-def addLink(request, listId, link):
+def addLink(request):
 	param = {}
-	param['listId'] = request.GET['listId']
-	param['link'] = request.GET['link']
+	json_data = request.read()
+	data = json.loads(json_data)
+	
+	litsId = data['listId']
+	link = data['postUrl']
 	list = List.objects.get(id = listId)
 	newItem = Item(list = list, link = link)
+	
 	newItem.save()
 	param['debug'] = newItem.link
-	return HttpResponse(json.dumps(1), content_type="application/json")
+	return HttpResponse(data, content_type="application/json")
 	
 def getList(request, list_id):
 	param = {}
