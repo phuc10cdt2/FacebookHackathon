@@ -70,7 +70,7 @@ var injected = injected || (function(){
 
 	function closeDialog() {
 		var theDialog = $("#dialogDiv").dialog();
-		theDialog.empty();
+		theDialog.dialog("close");
 	}
 	function savePost(postUrl, list_id){
 		closeDialog();
