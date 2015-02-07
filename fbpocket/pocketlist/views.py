@@ -124,7 +124,8 @@ def edit(request, list_id):
 def addLink(request):
 	param = {}
 	json_data = request.read()
-	data = json.loads(json_data)
+	data=json.loads(request.body)
+	#data = json.loads(json_data)
 	
 	litsId = data['listId']
 	link = data['postUrl']
