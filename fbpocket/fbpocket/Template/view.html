@@ -141,18 +141,18 @@
 		{% if items|length == 0 %}
 			<div class = "alert alert-warning">This list is empty</div>
 		{% endif  %}
-		<table width="100%" border="1">
+		<table width="100%" class="table">
 		{% for item in items%}
 			<tr>
-			<td id="{{item.fbId}}" style="height: 100px; overflow: hidden; margin-bottom: 20px">
-				<img id="{{item.fbId}_profileimg" src="{% static 'image/profilepic.png' %}" height="100" width="100" align="left" style="margin-right: 5px">
+			<td id="{{item.fbId}}" width="85%">
+				<img id="{{item.fbId}}_picture_src" src="{% static 'image/profilepic.png' %}" height="100" align="left" style="margin-right: 5px">
 				<p><a href="" id="{{item.fbId}}_from">from</a> by <span id="{{item.fbId}}_created_time" style="font-size: 11px">created_time</span></p>
 				<p id="{{item.fbId}}_description">description</p>
 				<!--<img id="{{item.fbId}}_icon_src" src="" height="100" width="100" align="left" style="margin-right: 5px">-->
-				<img id="{{item.fbId}}_picture_src" src="" style="width: auto"/>
+				<img id="{{item.fbId}_profileimg" src="" style="width: auto"/>
 				<a href="" id="{{item.fbId}}_link">link</a>
 			</td>
-			<td><a href="{{item.link}}"><img width="20px	" src="{% static 'image/open.png' %}"/></a></td>
+			<td><a href="{{item.link}}">View full article</a></td>
 			<td style="text-align: center"><a href ="/deleteItem/{{item.id}}/{{list.id}}/"><button class="btn btn-xs">x</button></a></td>
 			</tr>
 		{% endfor %}
