@@ -19,8 +19,8 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 
 	<a href = "/"><button class="btn btn-xs"><< Back to list</button></a><br/><br/>
-	<h2>{{list.title}}</h2>
-	<small > By {{owner}} at {{list.created_at}} </small>
+	<h2><img width ="20px" src= {%if list.status == 'public'%} "/static/image/public.png"{% else %} "/static/image/private.png" {% endif %}/> {{list.title}} </h2>
+	<small > Created at {{list.created_at}} </small>
 	<br/><br/>
 	{{mes|safe}}
 	<div class = "thumbnail">
@@ -30,7 +30,15 @@
 		<table width="100%">
 		{% for item in items%}
 			<tr>
-				<td width="96%">{{item.link}}</td>
+				<td width="96%">
+					<table>
+						<tr>
+							<td><div  class="thumbnail"><img src ="" max-width="100px" max-height="50px" alt="Image"></div></td>
+							<td></td>
+							<td>{{item.date}}</td>
+						</tr>
+					</table>
+				</td>
 				<td><a href ="/deleteItem/{{item.id}}/{{list.id}}/"><button class="btn btn-xs">x</button></a></td>
 			</tr>
 		{% endfor %}
@@ -57,7 +65,7 @@
 			</div>
 		{% endif %}
 		
-		<small class="pull-right"><a href = "/deleteList/{{list.id}}" >Delete this list permanently</a></small>
+		<small class="pull-right"><a href = "/update/{{list.id}}" >Update </a> | <a href = "/deleteList/{{list.id}}" > Delete this list permanently</a></small>
 		<br/>		
 		</div>
 	</div>	
