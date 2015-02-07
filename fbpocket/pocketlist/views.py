@@ -13,3 +13,11 @@ def index(request):
 				param,
 				context_instance=RequestContext(request)
 	)
+
+def new(request):
+	param = {}
+	return render_to_response(
+				'newlist.html',
+				param,
+				context_instance=RequestContext(request)
+	)
