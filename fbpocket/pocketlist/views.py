@@ -10,7 +10,7 @@ import simplejson, json
 import django.utils.simplejson as json
 from pocketlist.models import List
 from django.views.decorators.csrf import csrf_exempt
-
+from django.utils import simplejson
 
 def index(request):
 	param = {}
@@ -124,8 +124,8 @@ def edit(request, list_id):
 @csrf_exempt
 def addLink(request):
 	param = {}
-	json_data = request.read()
-
+	json_data = simplejson.loads(request.raw_post_data)
+	
 	#data = json.loads(json_data)
 	
 	litsId = json_data['listId']
