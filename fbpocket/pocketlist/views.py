@@ -6,15 +6,15 @@ from django.http import HttpResponseRedirect,HttpResponse
 from django.core.urlresolvers import reverse
 from pocketlist.models import *
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
+import simplejson, json
 
 def index(request):
-	
 	param = {}
-	
-	lists = List.objects.all()
+	print api_list(request,'userId')
+	lists = List.objects.filter(userId = 88)
 	for l in lists:
 		l.itemcount = Item.objects.filter(list = l).count()
-
+	
 	param['lists'] = lists
 	
 	return render_to_response(
@@ -24,6 +24,9 @@ def index(request):
 	)
 
 def view(request,listId):
+	
+	
+	
 	param={}
 	param['list'] = List.objects.get(id = listId)
 	items = Item.objects.filter(list_id= listId)
@@ -53,6 +56,8 @@ def new(request):
 		newList = List()
 		newList.title = request.POST['listName']
 		newList.userId = request.POST['userId']
+		#print userId
+		#print "-----------------"
 		title = newList.title
 		des = request.POST['des']
 		newList.description = des
@@ -65,26 +70,16 @@ def new(request):
 				
 	return render_to_response('newlist.html',param,context_instance=RequestContext(request))
 
-def addLink(request):
 
-	return render_to_response(
-				'newlist.html',
-				param,
-				context_instance=RequestContext(request)
-	)
-#this function is not completed
-def addLink(request, list_id):
+def addLink(request, listId, link):
 	param = {}
-	print 'add link to list id = ' + list_id
-	l = List.objects.filter(id = list_id)
-	newLink = Item()
-	newLink.link = ""
-	newLink.list = l
-	return render_to_response(
-				'newlink.html',
-				param,
-				context_instance=RequestContext(request)
-	)
+	listId = 1
+	link = "123123123"
+	list = List.objects.get(id = listId)
+	newItem = Item(list = list, link = link)
+	newItem.save()
+	return 
+	
 def getList(request, list_id):
 	param = {}
 	list = List.objects.filter(id = list_id)
@@ -139,3 +134,16 @@ def deleteList(request, listId):
 				param,
 				context_instance=RequestContext(request)
 	)
+def api_list(request,userId):
+	param = {}
+	lists = List.objects.filter(userId = "88")
+	data = []
+	for l in lists:
+		line = {}
+		line['id'] = l.id
+		line['title'] = l.title
+		data.append(line)
+	returnJson = json.dumps(data)
+	param['debug'] = returnJson
+	return returnJson
+	
