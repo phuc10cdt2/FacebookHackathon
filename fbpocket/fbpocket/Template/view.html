@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+	<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&appId=778008372291971&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&appId=778008372291971&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+	<a href = "/"><button class="btn btn-xs"><< Back to list</button></a><br/><br/>
+	<h2>{{list.title}}</h2>
+	<small > By {{owner}} at {{list.created_at}} </small>
+	<br/><br/>
+	{{mes|safe}}
+	<div class = "thumbnail">
+		{% if items|length == 0 %}
+			<div class = "alert alert-warning">This list is empty</div>
+		{% endif  %}
+		<table width="100%">
+		{% for item in items%}
+			<tr>
+				<td width="96%">{{item.link}}</td>
+				<td><a href ="/deleteItem/{{item.id}}/{{list.id}}/"><button class="btn btn-xs">x</button></a></td>
+			</tr>
+		{% endfor %}
+		</table>
+	
+	
+	<!-- Next/Prev page links  -->
+		<div >
+			{% if items.object_list and items.paginator.num_pages > 1 %}
+			<div class="pagination" >
+				<span class="step-links">
+					{% if items.has_previous %}
+						<a href= "?page={{ items.previous_page_number }}">&lt;&lt; </a>
+					{% endif %}
+
+					<span class="current">
+					&nbsp;Page {{ items.number }} of {{ items.paginator.num_pages }}
+					</span>
+
+					{% if items.has_next %}
+						<a href="?page={{ items.next_page_number }}"> &gt;&gt;</a>
+					{% endif %}
+				</span>
+			</div>
+		{% endif %}
+		
+		<small class="pull-right"><a href = "/deleteList/{{list.id}}" >Delete this list permanently</a></small>
+		<br/>		
+		</div>
+	</div>	
+	<br/>	
+
+	<div class="fb-like" data-href="http://172.18.146.23:8000/view/{{list.id}}/" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+
+{% endblock %}
