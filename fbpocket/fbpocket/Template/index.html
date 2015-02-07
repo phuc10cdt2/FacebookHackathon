@@ -2,14 +2,22 @@
 {% block content %}
 	{% for list in lists%}
 		<div class="col-sm-3">
-			<div class = "thumbnail">
-				<label>{{list.title}}</label>
+			<div class = "thumbnail" style="height:200px;padding:10px" >
+				<a href = "/"><h3>{{list.title}} ({{list.itemcount}})</h3></a>
+				<small > By {{owner}} at {{list.created_at}} </small>
+				<br/><br/>
+				<p>"{{list.description}}..."</p>
+				<hr style="margin:7px">
+				{% for i in list.items%}
+					- {{i.link}}<br/>
+				{% endfor %}
+				...
 			</div>
 		</div>
 	{% endfor %}
 	<div class="col-sm-2">
-			<a href="/new/" class="thumbnail">
-				<img src="/static/image/add.png" width="200px" alt="...">
+			<a href="/new/" class="thumbnail" >
+				<img src="/static/image/add.png" width="190px" alt="...">
 			</a>
 		</div>
 {% endblock %}
