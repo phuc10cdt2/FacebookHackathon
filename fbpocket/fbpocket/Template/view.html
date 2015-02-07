@@ -113,7 +113,7 @@
 	$( document ).ready(function() {
 		listId = [];
 		{% for item in items %}
-			listId.push('{{item.link}}');
+			listId.push('{{item.fbId}}');
 		{% endfor %}
 		console.log(listId);
 		checkLoginState();
@@ -134,12 +134,12 @@
 		<table width="100%" border="1">
 		{% for item in items%}
 			<tr>
-			<td id="{{item.link}}" style="height: 100px; overflow: hidden; margin-bottom: 20px">
-				<img id="{{item.link}_profileimg" src="" height="100" width="100" align="left" style="margin-right: 5px">
-				<p><span id="{{item.link}}_from">from</span> by <span id="{{item.link}}_created_time" style="font-size: 11px">created_time</span></p>
-				<p id="{{item.link}}_description">description</p>
-				<!--<img id="{{item.link}}_icon_src" src="" height="100" width="100" align="left" style="margin-right: 5px">-->
-				<p id="{{item.link}}_link">link</p>
+			<td id="{{item.fbId}}" style="height: 100px; overflow: hidden; margin-bottom: 20px">
+				<img id="{{item.fbId}_profileimg" src="" height="100" width="100" align="left" style="margin-right: 5px">
+				<p><span id="{{item.fbId}}_from">from</span> by <span id="{{item.fbId}}_created_time" style="font-size: 11px">created_time</span></p>
+				<p id="{{item.fbId}}_description">description</p>
+				<!--<img id="{{item.fbId}}_icon_src" src="" height="100" width="100" align="left" style="margin-right: 5px">-->
+				<p id="{{item.fbId}}_link">link</p>
 
 			</td>
 			<td style="text-align: center"><a href ="/deleteItem/{{item.id}}/{{list.id}}/"><button class="btn btn-xs">x</button></a></td>
