@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<a href = "/"><button class="btn btn-xs"><< Back to list</button></a><br/><br/>
+<h2>Edit List</h2>
+<div class="thumbnail">
+<form  action = '' method = 'post'>
+<input type="hidden" name="userId" value={{userId}}>
+{% csrf_token %}
+	<div class = 'form-group' style="margin-bottom:20px">
+		<label for='listName' class = 'col-sm-2 control-label'>
+			List name
+		</label>
+		<div class="col-sm-10">
+			<input value="{{list.title}}" class="form-control" id="listName" name = 'listName' placeholder="Give your list a name">
+		</div>
+	</div>
+	<br/><br/>
+	<div class = 'form-group'>
+		<label for='des' class = 'col-sm-2 control-label'>
+			Description
+		</label>
+		<div class = 'col-sm-10'>
+			<textarea class="form-control" rows="3" name = 'des' placeholder="Add some description">{{list.description}}
+            </textarea>
+		</div>
+	</div>
+	<br/><br/><br/><br/>
+	<div class = 'form-group'>
+		<div class = "col-sm-2 col-sm-offset-2">
+			<button type="submit" class="btn btn-primary">Save</button>
+		</div>
+	</div>
+</form>
+<br><br>
+</div>
+{% endblock %}

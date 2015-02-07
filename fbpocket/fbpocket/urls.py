@@ -17,4 +17,5 @@ urlpatterns = patterns('',
 	(r'^deleteList/(?P<listId>\d+)/$', views.deleteList),
 	(r'^list/(?P<list_id>\d+)/$', views.getList),
 	(r'^api_list/(?P<userId>\d+)/$', views.api_list),
+	(r'^edit/(?P<list_id>\d+)/$', views.edit),
 )

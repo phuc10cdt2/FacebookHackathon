@@ -1,4 +1,4 @@
-from django.shortcuts import render, render_to_response, redirect
+from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required 	#for login required
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template import RequestContext
@@ -7,6 +7,8 @@ from django.core.urlresolvers import reverse
 from pocketlist.models import *
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 import simplejson, json
+from pocketlist.models import List
+
 
 def index(request):
 	param = {}
@@ -69,6 +71,28 @@ def new(request):
 		return render_to_response('view.html',param,context_instance=RequestContext(request))
 				
 	return render_to_response('newlist.html',param,context_instance=RequestContext(request))
+
+
+def edit(request, list_id):
+	list = get_object_or_404(List, pk=list_id)
+	param = {}
+	param['list'] = list
+
+	if request.method == 'GET':
+		param['userId'] = request.GET['userId']
+
+
+	if request.method == 'POST':
+		list.title = request.POST['listName']
+		list.description = request.POST['des']
+		list.status = 'public'
+		list.save()
+		param['mes']= "<div class='alert alert-success'>The list has been updated successfully</div>"
+		param['list'] = list
+		param['items'] = []
+		return render_to_response('view.html', param, context_instance=RequestContext(request))
+	else:
+		return render_to_response('editlist.html',param,context_instance=RequestContext(request))
 
 
 def addLink(request, listId, link):
