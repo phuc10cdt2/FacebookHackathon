@@ -14,11 +14,14 @@ var injected = injected || (function(){
 		if (window.jQuery) {
 			console.log('jQuery loaded');
 		}
-
-
 		else{
-			alert('not loaded');
+			alert('jquery not loaded');
 		}
+		var oldlinks = document.getElementsByClassName('bookmarkDiv');
+		for (var i = oldlinks.length - 1; i >= 0; i--) {
+			oldlinks[i].parent().remove(oldlinks[i]);
+		};
+		
 		console.log(nodes.length);
 
 		for (var i = 0; i < nodes.length -1 ; i++) {
@@ -37,7 +40,7 @@ var injected = injected || (function(){
 				link.innerHTML = 'Bookmark';
 				
 				var div = document.createElement('div');
-				div.id = 'bookmarkDiv';
+				div.className = 'bookmarkDiv';
 				div.appendChild(link);
 				nodes[i].childNodes[0].appendChild(div);
 			})(postUrl);
