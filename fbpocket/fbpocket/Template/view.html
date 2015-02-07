@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
+
 {% block head %}<title>{{list.title}}</title> <meta name="description" content="{{list.description}}">{% endblock %}
+
 {% block content %}
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -53,6 +56,7 @@
 
 	  window.fbAsyncInit = function() {
 	  FB.init({
+		status: true,
 		appId      : '777319725678638',
 		//appId: '777319725678638',
 		cookie     : true,  // enable cookies to allow the server to access
@@ -106,7 +110,12 @@
 			if (item[keys[i]] !== undefined) {
 				str = '#' + item['id'] + '_' + keys[i];
 				console.log(str);
-				$(str).html(item[keys[i]]);
+				if (keys[i] == 'icon_src' || keys[i] == 'picture_src') {
+					$(str).src = item[keys[i]];
+				}
+				else {
+					$(str).html(item[keys[i]]);
+				}
 			}
 		}
 	}
@@ -136,13 +145,14 @@
 		{% for item in items%}
 			<tr>
 			<td id="{{item.fbId}}" style="height: 100px; overflow: hidden; margin-bottom: 20px">
-				<img id="{{item.fbId}_profileimg" src="" height="100" width="100" align="left" style="margin-right: 5px">
-				<p><span id="{{item.fbId}}_from">from</span> by <span id="{{item.fbId}}_created_time" style="font-size: 11px">created_time</span></p>
+				<img id="{{item.fbId}_profileimg" src="{% static 'image/profilepic.png' %}" height="100" width="100" align="left" style="margin-right: 5px">
+				<p><a href="" id="{{item.fbId}}_from">from</a> by <span id="{{item.fbId}}_created_time" style="font-size: 11px">created_time</span></p>
 				<p id="{{item.fbId}}_description">description</p>
 				<!--<img id="{{item.fbId}}_icon_src" src="" height="100" width="100" align="left" style="margin-right: 5px">-->
-				<p id="{{item.fbId}}_link">link</p>
-
+				<img id="{{item.fbId}}_picture_src" src="" style="width: auto"/>
+				<a href="" id="{{item.fbId}}_link">link</a>
 			</td>
+			<td><a href="{{item.link}}"><img width="20px	" src="{% static 'image/open.png' %}"/></a></td>
 			<td style="text-align: center"><a href ="/deleteItem/{{item.id}}/{{list.id}}/"><button class="btn btn-xs">x</button></a></td>
 			</tr>
 		{% endfor %}
