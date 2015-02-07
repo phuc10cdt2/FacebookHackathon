@@ -8,6 +8,8 @@ from pocketlist.models import *
 
 def index(request):
 	param = {}
+	lists = List.objects.all()
+	param['']
 	return render_to_response(
 				'index.html',
 				param,
