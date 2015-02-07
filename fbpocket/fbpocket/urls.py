@@ -8,4 +8,6 @@ from pocketlist import views
 urlpatterns = patterns('',
 	(r'^$', views.index),
 	(r'^new/', views.new),
+	(r'^new/', views.new),
+	(r'^add/', views.addLink),
 )

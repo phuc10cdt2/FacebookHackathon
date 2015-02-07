@@ -21,3 +21,11 @@ def new(request):
 				param,
 				context_instance=RequestContext(request)
 	)
+
+def addLink(request):
+	param = {}
+	return render_to_response(
+				'newlink.html',
+				param,
+				context_instance=RequestContext(request)
+	)
