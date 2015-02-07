@@ -107,7 +107,9 @@
 			'icon_src': resp.icon,
 			'link': resp.link,
 			'picture_src': resp.picture,
-			'description': resp.description
+			'description': resp.description,
+			'num_likes': resp.likes.data.length,
+			'num_comments': resp.comments.data.length
 		};
 		var keys = Object.keys(item);
 		for(var i in keys) {
@@ -136,7 +138,7 @@
 </script>
 
 
-	<a href = "/"><button class="btn btn-xs"><< Back to list</button></a><br/><br/>
+	<a href = "/"><button class="btn btn-xs"><< Back to collection</button></a><br/><br/>
 	<h2><img width ="20px" src= {%if list.status == 'public'%} "/static/image/public.png"{% else %} "/static/image/private.png" {% endif %}/> {{list.title}} </h2>
 	<small > Created at {{list.created_at}} </small>
 	<br/><br/>
@@ -156,9 +158,16 @@
 				<p id="{{item.fbId}}_description">Amazing post. Check it out!!!</p>
 				<!--<img id="{{item.fbId}}_icon_src" src="" height="100" width="100" align="left" style="margin-right: 5px">-->
 				<!--<img id="{{item.fbId}_profileimg" src="" style="width: auto"/>-->
-				<small><a href="" id="{{item.fbId}}_link">link</a></small>
+				<small><a href="" id="{{item.fbId}}_link"></a></small>
 			</td>
-			<td><a href="{{item.link}}">View full article</a></td>
+			<td>
+				<a href="{{item.link}}">View full article</a>
+				<p style="text-align: center"><span id="{{item.fbId}}_num_likes">13</span>
+				<img style="height: 20px; width: 20px" src="{% static 'image/fblike.jpg' %}"/>
+
+				<span id="{{item.fbId}}_num_comments">20</span>
+				<img style="height: 20px; width: 20px" src="{% static 'image/fbcomment.jpg' %}"/></p>
+			</td>
 			<td style="text-align: center"><a href ="/deleteItem/{{item.id}}/{{list.id}}/"><button class="btn btn-xs">x</button></a></td>
 			</tr>
 		{% endfor %}

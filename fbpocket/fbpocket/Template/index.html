@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 	<div class="col-sm-12">
-	<h2>My List</h2>
+	<h2>My Collection</h2>
 	{{mes|safe}}
 	</div>
 	{% for list in lists%}
 		<div class="col-sm-3" style="margin-bottom:20px">
-			<div class = "thumbnail" style="height:150px;padding:7px" >
+			<div class = "thumbnail" style="height:150px;padding:20px" >
 				<a href = "/view/{{list.id}}/"><h4><img width ="17px" src= {%if list.status == 'public'%} "/static/image/public.png"{% else %} "/static/image/private.png" {% endif %}/> {{list.title}} ({{list.itemcount}})</h4></a>
 				<small > Created at {{list.created_at}} </small>
 				<br/><br/>

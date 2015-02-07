@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<a href = "/"><button class="btn btn-xs"><< Back to list</button></a><br/><br/>
+<a href = "/"><button class="btn btn-xs"><< Back to collection</button></a><br/><br/>
 <h2><img width ="20px" src= {%if list.status == 'public'%} "/static/image/public.png"{% else %} "/static/image/private.png" {% endif %}/> Create New List</h2>
 <div class="thumbnail">
 <form  action = '/update/{{list.id}}/' method = 'post'>
