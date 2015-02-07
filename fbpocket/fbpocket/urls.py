@@ -8,5 +8,6 @@ admin.autodiscover()
 urlpatterns = patterns('',
 	(r'^admin/', include(admin.site.urls)),
 	(r'^$', views.index),
-	
+	(r'^new/', views.new),
+	(r'^add/', views.addLink),
 )

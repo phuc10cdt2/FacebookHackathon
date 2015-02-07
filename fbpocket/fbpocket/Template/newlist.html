@@ -7,11 +7,20 @@
 		</label>
 		<div class="col-sm-10">
 			<input class="form-control" id="listName" placeholder="List name">
-		</div>
-
+		</div>		
 	</div>
 	<div class = 'form-group'>
-		<button type = 'button' class = 'btn btn-default'>Add link</button>
+		<label for='des' class = 'col-sm-2 control-label'>
+			Description
+		</label>
+		<div class = 'col-sm-10'>
+			<textarea class="form-control" rows="3"></textarea>
+		</div>
+	</div>
+	<div class = 'form-group'>
+		<div class = "col-sm-2 col-sm-offset-2">
+			<button type="submit" class="btn btn-primary">Save</button>			
+		</div>
 	</div>
 </form>
 {% endblock %}
