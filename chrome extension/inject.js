@@ -24,7 +24,7 @@ var injected = injected || (function(){
 		for (var i = 0; i < nodes.length -1 ; i++) {
 			// var postUrl = '';
 			
-			var postUrl = $("span.fsm.fwn.fcg")[i];
+			var postUrl = $("._3dp._29k span.fsm.fwn.fcg")[i];
 			postUrl = postUrl.getElementsByTagName('a')[0].getAttribute('href');
 			console.log(postUrl);
 			(function(postUrl){
@@ -35,7 +35,9 @@ var injected = injected || (function(){
 				}
 				link.href = '#';
 				link.innerHTML = 'Bookmark';
+				
 				var div = document.createElement('div');
+				div.id = 'bookmarkDiv';
 				div.appendChild(link);
 				nodes[i].childNodes[0].appendChild(div);
 			})(postUrl);
