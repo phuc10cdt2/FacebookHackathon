@@ -125,13 +125,23 @@ def edit(request, list_id):
 def addLink(request,listId):
 	param = {}
 	link = request.GET.get("link", 'Error')
-	elements = link.split("/")
-	list = List.objects.get(id = listId)
-	for i in range(len(elements)-1,0,-1):
-		if len(elements[i])==16:
-			id = elements[i]
-			break
-	newItem = Item(list = list, link = link, fbId = id)
+	elements = list(link)
+	print elements
+	list1 = List.objects.get(id = listId)
+	check = 0
+	id = ""
+	for e in elements:	
+		if e.isdigit()==True:
+			check+=1
+			id+=str(e)
+		else:
+			if check < 16:
+				check = 0
+				id = ""
+			else:
+				break
+		print id
+	newItem = Item(list = list1, link = link, fbId = id)
 	
 	newItem.save()
 	param['debug'] = newItem.link
