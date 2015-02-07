@@ -11,6 +11,7 @@ import django.utils.simplejson as json
 from pocketlist.models import List
 from django.views.decorators.csrf import csrf_exempt
 
+
 def index(request):
 	param = {}
 	lists = List.objects.filter(userId = 88).order_by("-created_at").order_by('-status')
@@ -124,7 +125,7 @@ def edit(request, list_id):
 def addLink(request):
 	param = {}
 	json_data = request.read()
-	data=json.loads(request.body)
+
 	#data = json.loads(json_data)
 	
 	litsId = data['listId']
