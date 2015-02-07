@@ -130,6 +130,7 @@ def addLink(request,listId):
 	for i in range(len(elements)-1,0,-1):
 		if len(elements[i])==16:
 			id = elements[i]
+			break
 	newItem = Item(list = list, link = link, fbId = id)
 	
 	newItem.save()
